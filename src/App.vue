@@ -1,28 +1,53 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+  <div class="container mt-5">
+    <AddTask @addTask="addTask" />
+    <notifications class="mt-3" />
+    <div class="row justify-content-center mt-3">
+      <div class="col-11" v-for="(todo, index) in todos" :key="index">
+        <div class="card mt-2">
+          <div class="row p-3 align-items-center">
+            <div class="col-9" :class="{ 'task-complete': todo.done }">
+              {{ todo.task }}
+            </div>
+            <div class="col">
+              <button class="btn btn-success me-2">Check</button>
+              <button class="btn btn-danger">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import AddTask from "./components/AddTask.vue";
 
 export default {
-  name: "App",
   components: {
-    HelloWorld,
+    AddTask,
+  },
+  name: "App",
+  data: () => ({
+    todos: [],
+  }),
+  methods: {
+    addTask(todo) {
+      this.todos.push(todo);
+      this.$notify({
+        title: "Created",
+        text: "Created Task!",
+      });
+    },
   },
 };
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+label {
+  color: white;
+}
+.card {
+  border-radius: 1rem !important;
 }
 </style>
