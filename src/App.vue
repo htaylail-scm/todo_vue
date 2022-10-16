@@ -2,7 +2,10 @@
   <div class="container mt-5">
     <notifications class="mt-3" />
     <AddTask @addTask="addTask" />    
-    <div class="row justify-content-center mt-3">
+    <transition-group
+      enter-active-class="animate__animated animate__fadeInLeft"
+      leave-active-class="animate__animated animate__backOutRight"
+      class="row justify-content-center mt-3">
       <TodoItem v-for="(todo, index) in todos" 
       :key = "index" 
       :todo = "todo"
@@ -10,7 +13,7 @@
       @completeTodo = "completeTodo"
       @deleteTodo = "deleteTodo"
       />
-    </div>
+    </transition-group>
   </div>
 </template>
 
@@ -55,6 +58,15 @@ export default {
         text: "Complete Task!",
       });
     },
+
+    editTodo(todo, index) {
+      this.todos[index] = todo;
+      this.$notify({
+        title: "Edited",
+        text: "Updated Task!",
+        type: "success",
+      });
+    }
   },
 };
 </script>
