@@ -1,3 +1,7 @@
 body {
     background: rgb(170, 212, 107) !important;
 }
+
+.task-complete {
+    text-decoration: line-through;
+}

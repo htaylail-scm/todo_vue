@@ -3,31 +3,25 @@
     <notifications class="mt-3" />
     <AddTask @addTask="addTask" />    
     <div class="row justify-content-center mt-3">
-      <div class="col-11" v-for="(todo, index) in todos" :key="index">
-        <div class="card mt-2">
-          <div class="row p-3 align-items-center">
-            <div class="col-9" :class="{ 'task-complete': todo.done }">
-              {{ todo.task }}
-            </div>
-            <div class="col">
-              <button class="btn btn-success me-2">Check</button>
-              <button class="btn btn-danger">
-                <i class="material-icons mt-1" @click="deleteTodo(index)">delete</i>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <TodoItem v-for="(todo, index) in todos" 
+      :key = "index" 
+      :todo = "todo"
+      :index = "index" 
+      @completeTodo = "completeTodo"
+      @deleteTodo = "deleteTodo"
+      />
     </div>
   </div>
 </template>
 
 <script>
 import AddTask from "./components/AddTask.vue";
+import TodoItem from "./components/TodoItem.vue";
 
 export default {
   components: {
     AddTask,
+    TodoItem,
   },
   name: "App",
   data: () => ({
@@ -54,6 +48,13 @@ export default {
       }
     },
 
+    completeTodo(index) {
+      this.todos[index].done = true;
+      this.$notify({
+        title: "complete",
+        text: "Complete Task!",
+      });
+    },
   },
 };
 </script>
